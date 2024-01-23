@@ -92,3 +92,7 @@ weigh_g[weigh_g < 58 | weigh_g > 75]
 #operators < < == equal to sta con 2
 # <= e >= 
 # != diverso da
+
+animals[1:4]
+animals == "cincilla"
+animals == "cincilla" | animals == "duck"
