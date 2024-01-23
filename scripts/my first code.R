@@ -65,3 +65,30 @@ class(tricky)
 
 char_logical <- c("a", "b", "c", TRUE)
 class(char_logical)
+
+#subsetting vectors per accedere a value specifici
+animals[2]
+animals[2: 3]
+animals[2:4]
+animals[c(2,4)]
+
+more_animals <- animals[c(1, 2, 3, 2, 1, 4)]
+#subset con logical values
+weigh_g[c(FALSE, FALSE, TRUE, TRUE)]
+#usando operazioni logiche
+weigh_g > 63
+#FALSE FALSE  TRUE  TRUE#
+weigh_g[c(FALSE, FALSE,  TRUE, TRUE)]
+weigh_g > 50
+#FALSE TRUE TRUE  TRUE#
+weigh_g[c(FALSE, TRUE,  TRUE, TRUE)]
+
+#combine logiacal op
+
+weigh_g[weigh_g > 63 & weigh_g < 75]
+weigh_g[weigh_g < 58 | weigh_g > 75]
+
+
+#operators < < == equal to sta con 2
+# <= e >= 
+# != diverso da
