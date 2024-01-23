@@ -96,3 +96,39 @@ weigh_g[weigh_g < 58 | weigh_g > 75]
 animals[1:4]
 animals == "cincilla"
 animals == "cincilla" | animals == "duck"
+animals [animals == "cincilla" | animals == "duck" | animals == "wolf"]
+
+
+#percentage in percentage per trovare gli 
+#elementi corrispondenti al vettore di nostra scelta
+animals %in% c("duck", "dog", "cats")
+
+
+
+#missing data
+heights <- c(2, 4, 4, NA, 6)
+mean(heights, na.rm = TRUE)
+
+is.na(heights)
+#( ! = non )is.na ci toglie i missing
+heights[!is.na(heights)]
+na.omit(heights)
+na.omit(heights)
+complete.cases(heights)
+heights[complete.cases(heights)]
+
+
+
+heights_no_na <- heights[complete.cases(heights)]
+
+
+#challebge 2
+
+heights_1 <- c(63, 69,60, 65, NA, 68, 61, 70, 61, 59, 64, 69, 63 )
+na.omit(heights_1)
+complete.cases(heights_1)
+heights_1[complete.cases(heights_1)]
+heights_1_no_na <-  heights_1[complete.cases(heights_1)]
+median(heights_1_no_na)
+heights_1_no_na > 67
+sum(heights_1_no_na > 67)
