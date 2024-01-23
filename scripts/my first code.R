@@ -41,4 +41,27 @@ my_result <- my_function(3)
 
 weight_kg <- c(40, 50, 60, 70)
 mean(weight_kg [1:4])
-animals <- c("mouse","duck", "dog")
+weigh_g <- c(50, 60, 65, 82)
+
+animals <-  c("duck", "dog", "dolphin")
+
+length(animals)
+class(animals)
+class(weigh_g)
+str(animals)
+
+# add element to vector
+animals <- c("cincilla", animals)
+animals <-c
+animals <- c(animals, "cats")
+typeof(animals)
+
+num_char <- c(1, 2 , 3, "a")
+class(num_char)
+num_logical <- c(1, 2 , 3, TRUE)
+class(num_logical)
+tricky <- c(1, 2 , 3, "4")
+class(tricky)
+
+char_logical <- c("a", "b", "c", TRUE)
+class(char_logical)
