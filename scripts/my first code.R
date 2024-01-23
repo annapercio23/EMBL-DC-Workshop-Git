@@ -121,8 +121,7 @@ heights[complete.cases(heights)]
 
 heights_no_na <- heights[complete.cases(heights)]
 
-
-#challebge 2
+#challenge 2
 
 heights_1 <- c(63, 69,60, 65, NA, 68, 61, 70, 61, 59, 64, 69, 63 )
 na.omit(heights_1)
@@ -132,3 +131,14 @@ heights_1_no_na <-  heights_1[complete.cases(heights_1)]
 median(heights_1_no_na)
 heights_1_no_na > 67
 sum(heights_1_no_na > 67)
+
+#correzione esercizio
+heights_2 <- c(63, 69,60, 65, NA, 68, 61, 70, 61, 59, 64, 69, 63 )
+heights_2_no_na <- heights_2[!is.na(heights_2)]
+median(heights_2_no_na)
+#oppure
+median(heights_2, na.rm = T)
+heights_2_no_na[heights_2_no_na > 67]
+sum(heights_2_no_na > 67)
+#con sum ogni falso è 0 ogni vero è 1
+length(heights_2_no_na[heights_2_no_na > 67])
