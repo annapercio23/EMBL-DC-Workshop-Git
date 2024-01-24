@@ -98,7 +98,95 @@ ggplot(data = yearly_count, mapping =
 
 ggplot(data = yearly_count, mapping = 
          aes(x = year, y = n,color= genus)) +
+  geom_line()+
+  geom_point() #per aggiungere i punti
+
+ggplot(data = yearly_count, mapping = 
+         aes(x = year, y = n,color= genus, shape =genus)) + #per aggiungere
+  #forme diverse per i vari gruppi
+  geom_line()+
+  geom_point() 
+#si può fare il grafico con il pipe system
+yearly_count_graph <- yearly_count %>% 
+  ggplot(mapping = aes(x = year, y = n, color = genus)) +
   geom_line()
+
+yearly_count_graph
+
+#come separare il nostro plot in tutti subplot e fare un matrix plot
+#la tecnica si chiama  FACETING
+ggplot(data = yearly_count, mapping = 
+         aes(x = year, y = n,color= genus, shape =genus))+
+  geom_line() +
+  facet_wrap(facets = vars(genus))
+#aggiungi il sesso
+yearly_count2 <- surveys %>% 
+  count(year, genus, sex)
+
+ggplot(data = yearly_count2, mapping = 
+         aes(x = year, y = n,color= sex))+
+  geom_line() +
+  facet_wrap(facets = vars(genus))
+
+#specifichiamo cosa vogliamo nelle colonne e nei rows
+#qua si usa grid
+ggplot(data = yearly_count2, mapping = 
+         aes(x = year, y = n,color= sex))+
+  geom_line() +
+  facet_grid(rows = vars(sex), cols = vars(genus))
+
+
+#theme 
+#praticamente sono dei preset 
+grafico <- ggplot(data = yearly_count2, mapping = 
+         aes(x = year, y = n,color= sex))+
+  geom_line() +
+  facet_grid(rows = vars(sex), cols = vars(genus)) +
+  xlab("numero di osservazioni") +
+  ylab("anno") +
+  theme_bw(base_line_size = 18)
+grafico
+#salva il plot
+ggsave(filename = "downloads/bellissimografico.pdf",
+       plot = grafico,
+       width = 20,
+       height = 20,
+      )
+
+#nomina ascissa e ordinata 
+#xlab() e ylab()
+
+ggplot(data = yearly_count2, mapping = 
+         aes(x = year, y = n,color= sex))+
+  geom_line() +
+  facet_grid(rows = vars(sex), cols = vars(genus)) +
+  xlab("numero di osservazioni") +
+  ylab("anno") +
+  #theme_minimal()+ #per togliere background
+  theme(plot.background = element_blank(),
+        legend.position = "bottom",
+        aspect.ratio = 1,
+        axis.text.x = element_text(angle = 45, hjust = 1, face = "bold"),
+        panel.grid = element_blank())
+#panel.grid(element_blank())
+#scale_color_manual per mettere noi i colori 
+#per leggenda labels name = ""
+#hjust e vjust 0.5 per mettere la roba al centro
+#togli leggenda legend.position = "none"
+#face = "bold"
+
+lol <- ggplot(data = yearly_count2, mapping = 
+         aes(x = year, y = n,color= sex))+
+  geom_line() +
+  facet_grid(rows = vars(sex), cols = vars(genus)) +
+  xlab("numero di osservazioni") +
+  ylab("anno") +
+  theme_minimal()
+#geom_text e geom_annotate per aggiugerci cose
+
+#CHALLENGE
+install.packages("ggpubr")
+#ggoubr per dare i box plot molto belli con i p-value
 
 
 
