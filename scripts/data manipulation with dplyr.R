@@ -133,9 +133,26 @@ str(pivotsurveysgw)
 
 pivotsurveyslg <- pivotsurveysgw %>% 
   pivot_longer(names_to = "genus", values_to = "weight", cols = -plot_id)
-#fai caso che c'è un - vicino a plot id cbe è quello che reasta
-#quindi delle etichette sopra names to
-#valori  values to
+#fai caso che c'è un - vicino a plot id che è quello che resta
+#quindi le etichette sopra-- > names to
+#valori -->> values to
 #t() per trasporre la matrice
 
+#soluzione
+challenge3 <- surveys %>% 
+  pivot_longer(names_to = "measurement", 
+               values_to = "value", cols = c(hindfoot_length,weight))
 
+challenge4 <- challenge3 %>% 
+  group_by(year, measurement, plot_type) %>% 
+  summarise(mean_value = mean(value, na.rm = T)) %>% 
+  pivot_wider(names_from = measurement, values_from = mean_value) 
+
+#export data write csv (nome tabella in r e,nome cartella/ e file con 
+#cui lo vogliamo chiamare)
+surveys_complete <- surveys %>% 
+  filter(!is.na(weight),
+         !is.na(hindfoot_length),
+         !is.na(sex))
+
+write_csv(surveys_complete, file="data/surveys123.csv")
