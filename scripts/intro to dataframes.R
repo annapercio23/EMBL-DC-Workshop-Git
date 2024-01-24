@@ -79,3 +79,4 @@ surveys_middle <- surveys[34786/2,]
 #68:72 --> surveys[nrow(surveys),]
 #74 ok
 
+#per fare lista nome tabella[[x]] e estrae la colonna x come una lista
