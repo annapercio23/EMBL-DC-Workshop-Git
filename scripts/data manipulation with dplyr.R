@@ -21,10 +21,30 @@ surveys %>%
   filter(weight < 5) %>% 
   select(species_id, sex, weight)
 # %>% prende la funzione a destra e la applica su cosa abbiam scritto
-#a sinistra
+#a sinistra, dopo ogni %>% andare a capo
 
 #challenge
 
 challenge2 <- surveys %>% 
   filter(year < 1995) %>% 
   select(year, sex, weight)
+
+#inserire una nuova colonna contenente un dato che si rifà
+#a qualcosa già presente es. weight da g a kg
+
+surveys %>% 
+  mutate(weight_kg = weight/1000) %>% 
+  view
+#view per vedere direttamente la tabella
+#possiamo anche aggiungere piu colonne insieme
+surveys %>% 
+  mutate(weight_kg = weight/1000, weight_lb = weight_kg * 2.2) %>% 
+  view()
+#alternativamente si puo anche usare head per vedere prime sei righe
+#filtra togliendo i missing del peso
+surveys %>% 
+  filter(!is.na(weight)) %>% 
+  mutate(weight_kg = weight/1000, weight_lb = weight_kg * 2.2) %>% 
+  view()
+
+
