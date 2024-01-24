@@ -49,4 +49,32 @@ as.character(sex)
 #come convertire un numero a fattore
 year_fct <- factor(c(1990, 1983,1977, 1997))
 #livelli assegnati in ordine crescente
+levels(year_fct)
+as.numeric(year_fct)
+#come cambiare l'ordine di assegnazione
+as.numeric(as.character(year_fct))
+#ottenere i livelli con levels(year_fct)
+#conversione livelli in numeri as.numeric(levels(year_fct))
+#indexing [year_fct]
+as.numeric(levels(year_fct))[year_fct]
 
+# renaming factors
+plot(surveys$sex)
+summary(surveys$sex)
+# F     M  NA's 
+# 15690 17348  1748 
+#in questo caso vogliamo graficare 
+#anche quelli di cui non sappiamo il sesso
+sex <- addNA(sex)
+levels(sex)
+#sostituzione di na come undetermined
+levels(sex)[3] <- "undetermined"
+nlevels(sex)
+plot(sex)
+#Challenge
+
+levels(sex)[1:2] <- c("female", "male")
+plot(sex)
+
+sex <- factor(sex, levels = c("undetermined", "female", "male"))
+plot(sex)
