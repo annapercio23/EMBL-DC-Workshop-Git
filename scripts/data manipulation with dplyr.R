@@ -3,7 +3,7 @@ library(tidyverse)
 surveys <- read_csv("data_raw/portal_data_joined.csv")
 #per vedere che tipo di dato è
 str(surveys)
-#selezzione (tabella, e nome colonna)
+#selezione (tabella, e nome colonna)
 select(surveys, plot_id, species_id, weight)
 #non selezionare
 select(surveys, -record_id, -species_id)
@@ -117,6 +117,25 @@ heaviestperyear <- surveys%>%
   unique()
 #  unique() per eliminare i duplicati
 
+#come fare una tabella pivot
+surveys_gw <- surveys %>% 
+  filter(!is.na(weight)) %>% 
+  group_by(plot_id, genus) %>% 
+  summarise(mean_weight = mean(weight))
+str(surveys_gw)
 
+pivotsurveysgw <-  surveys_gw %>% 
+  pivot_wider(names_from=genus, values_from = mean_weight, values_fill = 0) 
+#value_fill 0 for NA nella pivot, normale replace_na
+str(pivotsurveysgw)
+#da wide a long format
+#id diventano keys e i valori avranno una colonna value
+
+pivotsurveyslg <- pivotsurveysgw %>% 
+  pivot_longer(names_to = "genus", values_to = "weight", cols = -plot_id)
+#fai caso che c'è un - vicino a plot id cbe è quello che reasta
+#quindi delle etichette sopra names to
+#valori  values to
+#t() per trasporre la matrice
 
 
