@@ -156,3 +156,4 @@ surveys_complete <- surveys %>%
          !is.na(sex))
 
 write_csv(surveys_complete, file="data/surveys123.csv")
+#install.packages("xlsx")
