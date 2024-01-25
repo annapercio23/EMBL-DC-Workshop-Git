@@ -149,4 +149,47 @@ rplot(trans_cts_corr) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 #hjust per mettere il testo allineato a dx dell'asse
 
+#compare trans e raw counts
+summary(raw_cts_long$cts)
+summary(trans_cts_long$cts)
 
+counts_raw %>% 
+  ggplot(aes(x = wt_0_r1, y = wt_0_r2))+
+  geom_point()
+#log 2
+
+counts_raw %>% 
+  ggplot(aes(x = wt_0_r1 + 1, y = wt_0_r2 + 1))+
+  geom_point()+
+  scale_x_continuous(trans = "log2") +
+  scale_y_continuous(trans = "log2") +
+  geom_abline(color = "red")
+#scale_x_continuous() perchè so valori continyi
+#trans transform 
+
+raw_cts_long %>% 
+  group_by(gene) %>% 
+  summarise(mean_cts = mean(cts), var_cts = var(cts)) %>% 
+  ggplot(aes(x = mean_cts, y = var_cts)) +
+  geom_point() +
+  geom_abline(color = "red") +
+  scale_x_continuous(trans = "log2") +
+  scale_y_continuous(trans = "log2")
+
+#dsyc2 package per RNA transfonmation e
+#normalization
+
+trans_cts_long %>% 
+  group_by(gene) %>% 
+  summarise(mean_cts = mean(cts), var_cts = var(cts)) %>% 
+  ggplot(aes(x = mean_cts, y = var_cts)) +
+  geom_point() 
+  
+
+
+
+
+
+
+
+  
