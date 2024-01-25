@@ -89,8 +89,64 @@ tablejoinraw %>%
 #gli 0 in scala logaritmica
 tablejoinraw %>% 
   ggplot(aes(x = log10(cts + 1), color = replicate)) +
-  geom_freqpoly() +
+  geom_freqpoly(binwidth = 1) +
   facet_grid(rows = vars(strain), cols = vars(minute))
 
+#boxplot
+
+tablejoinraw %>% 
+  ggplot(aes(x = factor(minute), y = log10(cts + 1), 
+             fill = strain)) +
+  geom_boxplot() +
+  ggtitle("boxplot")
+  theme_bw()
+#dato che minute sono numeri li dobbiamo mettere come factors  
+#fill strain per fare il colore wt e mut diversi
+
+tablejoinraw %>% 
+    ggplot(aes(x = factor(minute), y = log10(cts + 1),fill = strain)) +
+    geom_boxplot() +
+  facet_grid(cols = vars(replicate))
+#vars per cosa lo vuoi separare  
+#check correlation
+#correlazione tra wt a t0 e t30 con scatter plot
+
+correlation <-  counts_transformed %>% 
+  select(gene, wt_0_r1, wt_30_r1)
+#usiamo counts transformed perchè i valori di interesse
+#sono in verticale
+correlation %>% 
+  ggplot(aes(x = wt_0_r1, y = wt_30_r1)) +
+  geom_point() +
+  geom_abline(color = "red") 
+# geom_abline per la linea di correlazione
+#nb cosa scrivi dopo sta davanti nel grafico
+
+#look at correlation of count data across all samples
+
+trans_cts_corr <- counts_transformed %>% 
+  select(wt_0_r1 : mut_180_r3) %>% 
+  cor(method = "spearman")
+#select (- gene) per togliere gene column
+#cor per vedere le correlazioni espletando il metodo in questo
+#caso spearman, l'output è una MATRICE
+# var(x, y = NULL, na.rm = FALSE, use)
+# 
+# cov(x, y = NULL, use = "everything",
+#     method = c("pearson", "kendall", "spearman"))
+# 
+# cor(x, y = NULL, use = "everything",
+#     method = c("pearson", "kendall", "spearman"))
+
+#heatmap
+library(corrr)
+#se si deve installare install.package
+rplot(trans_cts_corr)
+#size della bolla proporzionale alla correlazione
+
+#yassification dell'asse x
+rplot(trans_cts_corr) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+#hjust per mettere il testo allineato a dx dell'asse
 
 
