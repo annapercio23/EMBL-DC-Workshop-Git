@@ -186,6 +186,13 @@ trans_cts_long %>%
   geom_point() 
   
 
+trans_cts_long %>% 
+  group_by(gene) %>% 
+  summarise(mean_cts = mean(cts), var_cts = var(cts)) %>% 
+  mutate(above_four = var_cts > 4 ) %>% 
+  ggplot(aes(x = mean_cts, y = var_cts, color = above_four)) +
+  geom_point() 
+
 
 
 
