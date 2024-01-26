@@ -115,6 +115,13 @@ autoplot(sample_pca)
 autoplot(sample_pca, data = sample_info, 
          color = "minute", shape = "strain")
 #qua non si puo usare factor
+#come possiamo mettere il factor
+# %>% 
+#mutate(minute = as.factor(minute)),
+
+autoplot(sample_pca, data = sample_info %>% 
+           mutate(minute = as.factor(minute)),
+         color = "minute", shape = "strain")
 
 #broom
 library(broom)
@@ -130,3 +137,7 @@ tidy(sample_pca, matrix = "eigenvalues")
 
 tidy(sample_pca, matrix = "loadings")
 #ci sono anche molti altri pacchetti, cercarli
+
+
+
+
