@@ -52,12 +52,12 @@ pc_scores <-  sample_pca$x %>%
 
 pc_scores %>% 
   ggplot(aes(x = PC1, y = PC2)) +
-  geom_point() +
+  geom_point() 
   
 joinscor <- pc_scores %>% 
   full_join(sample_info, by = "sample") 
 
-joinscor %>% 
+pca_plot <-  joinscor %>% 
   ggplot(aes(x = PC1, y = PC2, 
              color = factor(minute), shape = strain)) +
   geom_point() +
@@ -82,13 +82,51 @@ top_10_genes <-pc_loadings %>%
 
 top_loadings <- pc_loadings %>% 
   filter(gene %in% top_10_genes)
-
-plt <- top_loadings %>% 
+library(ggplot2)
+loadings_plot<- top_loadings %>% 
   ggplot() +
-  geom_segment(aes(x = 0, y = 0, xend = PC1, yend = PC2),
-               arrow = arrow(length = unit(0.1, "in")), color = "brown") +
-  geom_text(aes(x = PC1, y = PC2, label = gene), nudge_y = 0.05, size = 3) +
+  geom_segment(aes(x = 0, y = 0, xend = PC1, yend = PC2), 
+               arrow = arrow(length = unit (0.1, "in")), color = "brown") +
+  geom_text(aes(x = PC1, y = PC2, label = gene), nudge_y = 0.05, size = 4) +
   scale_x_continuous(expand = c(0.02,0.02)) 
-
   
 
+#come creare uba figura con pannelli multipli
+library(patchwork)
+# a seconda dell'operatore che si usa sarnno posizionati i pannelli
+(pca_plot | loadings_plot)
+(pca_plot / loadings_plot)
+
+((pca_plot | loadings_plot)/(pca_plot | loadings_plot))
+((pca_plot| pca_plot | pca_plot)/ (loadings_plot))
+
+#aggiungi lettere
+((pca_plot| pca_plot | pca_plot)/ (loadings_plot)) +
+  plot_annotation(tag_levels = "A")
+
+((pca_plot| pca_plot | pca_plot)/ (loadings_plot)) +
+  plot_annotation(tag_levels = "a")
+
+#si può usare anche ggfortify
+library(ggfortify)
+autoplot(sample_pca) 
+
+#yassification
+autoplot(sample_pca, data = sample_info, 
+         color = "minute", shape = "strain")
+#qua non si puo usare factor
+
+#broom
+library(broom)
+tidy(sample_pca, matrix = "eigenvalues")
+#il comando tidy ci permette di sostituire tutto questo codice:
+# pc_eigenvalues <- tibble(PC = factor(1:length(pc_eigenvalues)), 
+#                          variance = pc_eigenvalues) %>% 
+#   mutate(pct = variance/sum(variance)*100) %>%
+#   mutate(pct_cum = cumsum(pct))
+#si possono creare le proprie funzioni e dargli dei nomi
+#cosicchè possiamo solo scrivere la funzione e non fare copia
+#incolla di piu azioni
+
+tidy(sample_pca, matrix = "loadings")
+#ci sono anche molti altri pacchetti, cercarli
